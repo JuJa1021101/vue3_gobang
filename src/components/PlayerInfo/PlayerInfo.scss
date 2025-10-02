@@ -1,0 +1,177 @@
+@import "@/assets/styles/variables.scss";
+
+.player-info-card {
+  background: $white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-4;
+  box-shadow: $shadow-md;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  transition: all 0.3s ease;
+
+  &.active {
+    border: 2px solid $primary-color;
+    box-shadow: 0 0 15px rgba($primary-color, 0.3);
+    transform: translateY(-5px);
+  }
+
+  .player-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    margin-bottom: $spacing-2;
+    position: relative;
+
+    .player-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      @include center-flex;
+      font-size: $font-size-2xl;
+      box-shadow: $shadow-sm;
+
+      &.black-avatar {
+        background-color: $black-piece-color;
+        color: $white;
+      }
+
+      &.white-avatar {
+        background-color: $white-piece-color;
+        color: $black;
+        border: 1px solid $gray-400;
+      }
+    }
+
+    .player-name {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      color: $gray-900;
+      margin: 0;
+    }
+
+    .current-player-indicator {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: $success-color;
+      color: $white;
+      padding: 4px 10px;
+      border-radius: $border-radius-full;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+  }
+
+  .player-stats {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .stat-label {
+        font-size: $font-size-base;
+        color: $gray-700;
+        font-weight: $font-weight-medium;
+      }
+
+      .stat-value {
+        font-size: $font-size-base;
+        font-weight: $font-weight-semibold;
+        color: $gray-900;
+
+        &.text-danger {
+          color: $danger-color;
+        }
+      }
+
+      .energy-bar-container {
+        flex-grow: 1;
+        height: $energy-bar-height;
+        background-color: $gray-200;
+        border-radius: $energy-bar-border-radius;
+        margin-left: $spacing-2;
+        position: relative;
+        overflow: hidden;
+
+        .energy-bar {
+          height: 100%;
+          background: linear-gradient(to right, $info-color, $primary-color);
+          border-radius: $energy-bar-border-radius;
+          transition: width 0.5s ease-out;
+        }
+
+        .energy-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: $white;
+          font-size: $font-size-sm;
+          font-weight: $font-weight-bold;
+          text-shadow: $text-shadow-sm;
+        }
+      }
+    }
+  }
+
+  .player-history {
+    margin-top: $spacing-3;
+    border-top: 1px solid $gray-200;
+    padding-top: $spacing-3;
+
+    h4 {
+      font-size: $font-size-base;
+      color: $gray-800;
+      margin: 0 0 $spacing-2 0;
+    }
+
+    .energy-log {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        font-size: $font-size-sm;
+        color: $gray-600;
+        padding: $spacing-1 0;
+        border-bottom: 1px dashed $gray-100;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .log-amount {
+          font-weight: $font-weight-semibold;
+          &.text-success {
+            color: $success-color;
+          }
+          &.text-danger {
+            color: $danger-color;
+          }
+        }
+
+        .log-reason {
+          flex-grow: 1;
+          text-align: right;
+          margin-left: $spacing-2;
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0% { transform: translateY(-50%) scale(1); opacity: 1; }
+  50% { transform: translateY(-50%) scale(1.05); opacity: 0.8; }
+  100% { transform: translateY(-50%) scale(1); opacity: 1; }
+}
+

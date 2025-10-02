@@ -1,0 +1,120 @@
+/* SkillEffect.scss */
+
+@import "@/assets/styles/variables.scss";
+
+.skill-effect-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  pointer-events: none; /* 允许点击穿透 */
+  background-color: rgba(0, 0, 0, 0.6); /* 默认背景 */
+  transition: background-color 0.5s ease;
+
+  .effect-content {
+    text-align: center;
+    color: $white;
+    animation: fadeInScale 0.8s ease-out forwards;
+
+    .effect-icon {
+      font-size: $font-size-4xl * 2; // 6rem
+      margin-bottom: $spacing-4;
+      animation: bounceEffect 1.5s infinite ease-in-out;
+    }
+
+    .effect-text {
+      font-size: $font-size-3xl * 1.2; // 2.5rem
+      font-weight: $font-weight-bold;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  .particle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* 技能特定背景和动画 */
+  &.effect-fly-sand {
+    background: radial-gradient(circle, rgba($danger-color, 0.8) 0%, rgba(139, 69, 19, 0.8) 100%);
+  }
+
+  &.effect-pick-gold {
+    background: radial-gradient(circle, rgba($info-color, 0.8) 0%, rgba(0, 128, 128, 0.8) 100%);
+  }
+
+  &.effect-clean-service {
+    background: radial-gradient(circle, rgba($success-light, 0.8) 0%, rgba(64, 224, 208, 0.8) 100%);
+  }
+
+  &.effect-freeze-water {
+    background: radial-gradient(circle, rgba($info-color, 0.8) 0%, rgba(0, 100, 200, 0.8) 100%);
+  }
+
+  &.effect-mountain-power {
+    background: radial-gradient(circle, rgba($warning-color, 0.8) 0%, rgba(255, 140, 0, 0.8) 100%);
+  }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounceEffect {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-30px); }
+}
+
+.skill-particle {
+  position: absolute;
+  background-color: white; // 默认颜色，会被技能类型覆盖
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: particle-fade-move forwards;
+  z-index: 10000;
+}
+
+@keyframes particle-fade-move {
+  0% {
+    opacity: 1;
+    transform: translate(var(--start-x), var(--start-y)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--end-x), var(--end-y)) scale(0);
+  }
+}
+
+// 技能特定粒子颜色
+.particle-fly-sand {
+  background-color: #FF6B6B; // 飞沙走石的颜色
+  box-shadow: 0 0 5px #FF6B6B;
+}
+.particle-pick-gold {
+  background-color: #FFD93D; // 拾金不昧的颜色 (金色)
+  box-shadow: 0 0 5px #FFD93D;
+}
+.particle-clean-service {
+  background-color: #95E1D3; // 保洁上门儿的颜色
+  box-shadow: 0 0 5px #95E1D3;
+}
+.particle-freeze-water {
+  background-color: #38B6FF; // 静如止水的颜色
+  box-shadow: 0 0 5px #38B6FF;
+}
+.particle-mountain-power {
+  background-color: #FFD93D; // 力拔山兮的颜色 (闪电色)
+  box-shadow: 0 0 10px #FFD93D;
+}
+
