@@ -1,5 +1,161 @@
-# Vue 3 + TypeScript + Vite
+# Vue3 技能五子棋 (Vue3 Gobang with Skills)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 🚀 项目简介
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+这是一个基于 Vue 3、TypeScript 和 Vite 构建的创新型五子棋游戏。它在传统五子棋的基础上，引入了独特的**技能系统**、**能量机制**和**动态游戏阶段**，为玩家带来更具策略性和趣味性的对战体验。游戏的目标是先手或后手在棋盘上形成连续的五颗己方棋子（横、竖、斜皆可）。
+
+## ✨ 主要特性
+
+-   **传统五子棋玩法**：遵循标准的五子棋规则，15x15 棋盘，五子连珠获胜。
+-   **独特的技能系统**：
+    -   引入多种主动技能，如“飞沙走石”、“拾金不昧”、“保洁上门儿”、“静如止水”和“力拔山兮”。
+    -   每个技能拥有不同的能量消耗、稀有度、冷却时间和效果，极大地丰富了游戏策略。
+-   **能量机制**：
+    -   玩家通过落子、连珠、阻断对手等行为获取能量。
+    -   能量用于施放技能，合理管理能量是取胜的关键。
+    -   劣势方可获得能量加成，增加翻盘机会。
+-   **动态游戏阶段**：游戏分为开局期、中局期等阶段，不同阶段可能有不同的游戏节奏和策略考量。
+-   **福运箱系统**：游戏过程中会随机出现福运箱，为玩家提供额外能量奖励。
+-   **僵局判定**：引入僵局判定机制，避免游戏无限延长。
+-   **响应式设计**：基于 Vue 3 的响应式数据管理和组件化开发。
+-   **TypeScript 支持**：提供强类型检查，提高代码质量和可维护性。
+-   **Vite 极速开发体验**：利用 Vite 的闪电般启动速度和热模块重载功能，提升开发效率。
+
+## 🛠️ 技术栈
+
+-   **前端框架**：Vue 3
+-   **开发工具**：Vite
+-   **编程语言**：TypeScript
+-   **状态管理**：Pinia
+-   **样式预处理器**：Sass (SCSS)
+-   **实用工具库**：@vueuse/core
+-   **代码规范**：ESLint, Prettier
+
+## ⚙️ 安装与运行
+
+请确保您已安装 Node.js (推荐 v16+) 和 npm 或 yarn。
+
+1.  **克隆仓库**：
+    ```bash
+    git clone https://github.com/JuJa1021101/vue3_gobang.git
+    cd vue3_gobang
+    ```
+
+2.  **安装依赖**：
+    ```bash
+    npm install
+    # 或者
+    yarn install
+    ```
+
+3.  **运行开发服务器**：
+    ```bash
+    npm run dev
+    # 或者
+    yarn dev
+    ```
+    项目将在本地启动，通常在 `http://localhost:5173` 访问。
+
+4.  **构建生产版本**：
+    ```bash
+    npm run build
+    # 或者
+    yarn build
+    ```
+    构建后的文件将输出到 `dist` 目录。
+
+5.  **预览生产版本**：
+    ```bash
+    npm run preview
+    # 或者
+    yarn preview
+    ```
+
+## 🎮 游戏规则
+
+### 基础规则
+
+-   **棋盘**：15x15 的棋盘。
+-   **目标**：先手或后手在横、竖、斜任意方向上形成连续的五颗己方棋子即可获胜。
+-   **禁手**：本项目暂未实现禁手规则，玩家可以自由落子。
+
+### 技能系统
+
+游戏引入了以下技能，玩家需要消耗能量来施放：
+
+| 技能名称   | 描述                               | 能量消耗 | 稀有度   | 冷却时间 (回合) | 最大使用次数 |
+| :--------- | :--------------------------------- | :------- | :------- | :-------------- | :----------- |
+| 飞沙走石   | 把对手的棋子扔进什刹海（移除边缘非关键棋子） | 80       | 普通     | 3               | 无限制       |
+| 拾金不昧   | 从什刹海里捞一颗棋子（移除一颗棋子）     | 100      | 普通     | 0               | 1            |
+| 保洁上门儿 | 随机扫除 3-5 颗棋子                | 120      | 稀有     | 0               | 无限制       |
+| 静如止水   | 速冻对手（跳过一回合）             | 150      | 稀有     | 0               | 1            |
+| 力拔山兮   | 清空整个棋盘                       | 200      | 传说     | 0               | 1            |
+
+### 能量获取
+
+玩家可以通过以下方式获取能量：
+
+-   **每步基础能量**：每次落子获得 10 能量。
+-   **连珠奖励**：
+    -   2 连：额外 15 能量。
+    -   3 连：额外 25 能量。
+    -   活连：额外 40 能量。
+-   **阻断对手**：成功阻断对手形成 3 连或以上时，额外获得 20 能量。
+-   **僵局奖励**：在特定僵局条件下获得 50 能量。
+-   **劣势方加成**：能量较低的玩家可获得 1.3 倍的能量加成。
+-   **福运箱**：每 12 回合随机出现，提供 50-80 能量，劣势方获得福运箱的概率增加 30%。
+
+## 📂 项目结构
+
+```
+vue3_gobang/
+├── public/                     # 静态资源
+├── src/
+│   ├── assets/                 # 静态资源 (图片、样式)
+│   │   ├── styles/             # 全局样式文件 (SCSS)
+│   ├── components/             # Vue 组件
+│   │   ├── ChessBoard/         # 棋盘组件
+│   │   ├── GameControl/        # 游戏控制组件
+│   │   ├── PlayerInfo/         # 玩家信息组件
+│   │   ├── SkillEffect/        # 技能效果展示组件
+│   │   └── SkillPanel/         # 技能面板组件
+│   ├── composables/            # Vue 组合式函数 (逻辑复用)
+│   │   ├── useEnergySystem.ts  # 能量系统逻辑
+│   │   ├── useGameLogic.ts     # 核心游戏逻辑
+│   │   └── useSkillSystem.ts   # 技能系统逻辑
+│   ├── constants/              # 常量定义 (游戏配置、技能配置)
+│   │   ├── gameConfig.ts       # 游戏配置
+│   │   └── skillConfig.ts      # 技能配置
+│   ├── stores/                 # Pinia 状态管理模块
+│   │   ├── gameStore.ts        # 游戏状态存储
+│   │   └── skillStore.ts       # 技能状态存储
+│   ├── types/                  # TypeScript 类型定义
+│   │   ├── game.ts             # 游戏相关类型
+│   │   ├── player.ts           # 玩家相关类型
+│   │   └── skill.ts            # 技能相关类型
+│   ├── utils/                  # 工具函数
+│   │   ├── animationUtil.ts    # 动画工具
+│   │   ├── chessUtil.ts        # 棋盘工具
+│   │   └── skillUtil.ts        # 技能工具
+│   ├── App.vue                 # 根组件
+│   ├── main.ts                 # 应用入口文件
+│   └── style.css               # 全局 CSS (可能被 SCSS 替代)
+├── index.html                  # HTML 模板
+├── package.json                # 项目依赖和脚本
+├── tsconfig.json               # TypeScript 配置
+├── vite.config.ts              # Vite 配置
+└── README.md                   # 项目说明文档
+```
+
+## 🤝 贡献
+
+欢迎所有形式的贡献！如果您有任何建议、功能请求或 Bug 报告，请随时提交 Issue 或 Pull Request。
+
+## 📄 许可证
+
+本项目采用 MIT 许可证。详情请参阅 [LICENSE](LICENSE) 文件。
+
+---
+
+**作者**：Manus AI
+**日期**：2026年3月9日
